@@ -1,0 +1,30 @@
+version: "2"
+services:
+    www:
+        build: .
+        ports: 
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./web:/var/www/html/
+            
+        links:
+            - db
+        networks:
+            - default
+    db:
+        image: mysql:5.7
+        ports: 
+            - "3309:3306"
+        environment:
+            MYSQL_DATABASE: T1
+            MYSQL_USER: user1
+            MYSQL_PASSWORD: test1
+            MYSQL_ROOT_PASSWORD: test1 
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d
+            - /root/docker_example/hello_mysql:/var/lib/mysql
+        networks:
+            - default
+
+
